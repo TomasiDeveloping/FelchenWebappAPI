@@ -65,7 +65,9 @@ namespace Api.Data.Repositories
                     UserId = c.UserId,
                     WaterTemperature = c.WaterTemperature,
                     WindSpeed = c.WindSpeed,
-                    DeepFishCatch = c.DeepFishCatch
+                    DeepFishCatch = c.DeepFishCatch,
+                    Latitude = c.Latitude,
+                    Longitude = c.Longitude
                 })
                 .AsNoTracking()
                 .Where(c => c.AllowPublic)
@@ -95,7 +97,9 @@ namespace Api.Data.Repositories
                         UserId = c.UserId,
                         WaterTemperature = c.WaterTemperature,
                         WindSpeed = c.WindSpeed,
-                        DeepFishCatch = c.DeepFishCatch
+                        DeepFishCatch = c.DeepFishCatch,
+                        Latitude = c.Latitude,
+                        Longitude = c.Longitude
                     })
                     .AsNoTracking()
                     .Where(c => c.UserId == userId)
@@ -121,7 +125,9 @@ namespace Api.Data.Repositories
                         UserId = c.UserId,
                         WaterTemperature = c.WaterTemperature,
                         WindSpeed = c.WindSpeed,
-                        DeepFishCatch = c.DeepFishCatch
+                        DeepFishCatch = c.DeepFishCatch,
+                        Latitude = c.Latitude,
+                        Longitude = c.Longitude
                     })
                     .AsNoTracking()
                     .Where(c => c.UserId == userId)
@@ -164,7 +170,9 @@ namespace Api.Data.Repositories
                     UserId = c.UserId,
                     WaterTemperature = c.WaterTemperature,
                     WindSpeed = c.WindSpeed,
-                    DeepFishCatch = c.DeepFishCatch
+                    DeepFishCatch = c.DeepFishCatch,
+                    Latitude = c.Latitude,
+                    Longitude = c.Longitude
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == fishCatchId);
@@ -188,7 +196,9 @@ namespace Api.Data.Repositories
                 WaterTemperature = fishCatchDto.WaterTemperature,
                 UserId = fishCatchDto.UserId,
                 WindSpeed = fishCatchDto.WindSpeed,
-                DeepFishCatch = fishCatchDto.DeepFishCatch
+                DeepFishCatch = fishCatchDto.DeepFishCatch,
+                Latitude = fishCatchDto.Latitude,
+                Longitude = fishCatchDto.Longitude
             };
             
             await _context.FischCatches.AddAsync(newFishCatch);
@@ -217,6 +227,8 @@ namespace Api.Data.Repositories
             fishCatchToUpdate.WaterTemperature = fishCatchDto.WaterTemperature;
             fishCatchToUpdate.WindSpeed = fishCatchDto.WindSpeed;
             fishCatchToUpdate.DeepFishCatch = fishCatchDto.DeepFishCatch;
+            fishCatchToUpdate.Latitude = fishCatchDto.Latitude;
+            fishCatchToUpdate.Longitude = fishCatchDto.Longitude;
 
             var checkUpdate = await Complete();
             return checkUpdate ? fishCatchDto : null;

@@ -19,6 +19,8 @@ namespace Api.Dtos
         public double? AirPressure { get; set; }
         public double? WindSpeed { get; set; }
         public double? AirTemperature { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
         public bool AllowPublic { get; set; }
     }
 }

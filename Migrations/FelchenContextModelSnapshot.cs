@@ -51,6 +51,12 @@ namespace Api.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("float");
+
                     b.Property<string>("NymphColor")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
