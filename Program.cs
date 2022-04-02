@@ -5,11 +5,7 @@ using Api.Helper;
 using Api.Interfaces;
 using Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -44,16 +40,16 @@ builder.Services.AddCors();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "FelcheWepApp", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo {Title = "FelcheWepApp", Version = "v1"});
 
-    var securitySchema = new OpenApiSecurityScheme()
+    var securitySchema = new OpenApiSecurityScheme
     {
         Description = "JWT Auth Bearer Scheme",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
-        Reference = new OpenApiReference()
+        Reference = new OpenApiReference
         {
             Type = ReferenceType.SecurityScheme,
             Id = "Bearer"
@@ -93,9 +89,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 app.Run();

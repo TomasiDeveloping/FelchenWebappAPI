@@ -1,52 +1,49 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
 using Api.Helper;
 using Microsoft.Extensions.Options;
 
-namespace Api.Services
+namespace Api.Services;
+
+public class EmailService
 {
-    public class EmailService
+    private readonly string _host;
+    private readonly string _password;
+    private readonly int _port;
+    private readonly string _senderAddress;
+    private readonly string _userName;
+
+    public EmailService(IOptions<EmailSettings> conf)
     {
-        private readonly string _host;
-        private readonly int _port;
-        private readonly string _userName;
-        private readonly string _password;
-        private readonly string _senderAddress;
+        _host = conf.Value.Host;
+        _port = conf.Value.Port;
+        _userName = conf.Value.UserName;
+        _password = conf.Value.Password;
+        _senderAddress = conf.Value.SenderAddress;
+    }
 
-        public EmailService(IOptions<EmailSettings> conf)
+    public async Task<bool> SendEmailAsync(string receiverAddress, string message, string subject)
+    {
+        var smtpServer = new SmtpClient(_host, _port);
+        var mail = new MailMessage();
+
+        smtpServer.EnableSsl = false;
+        smtpServer.Credentials = new NetworkCredential(_userName, _password);
+
+        mail.From = new MailAddress(_senderAddress);
+        mail.To.Add(receiverAddress);
+        mail.Subject = subject;
+        mail.Body = message;
+        mail.IsBodyHtml = true;
+
+        try
         {
-            _host = conf.Value.Host;
-            _port = conf.Value.Port;
-            _userName = conf.Value.UserName;
-            _password = conf.Value.Password;
-            _senderAddress = conf.Value.SenderAddress;
+            await smtpServer.SendMailAsync(mail);
+            return true;
         }
-        
-        public async Task<bool> SendEmailAsync(string receiverAddress, string message, string subject)
+        catch (Exception ex)
         {
-            var smtpServer = new SmtpClient(_host, _port);
-            var mail = new MailMessage();
-
-            smtpServer.EnableSsl = false;
-            smtpServer.Credentials = new NetworkCredential(_userName, _password);
-
-            mail.From = new MailAddress(_senderAddress);
-            mail.To.Add(receiverAddress);
-            mail.Subject = subject;
-            mail.Body = message;
-            mail.IsBodyHtml = true;
-
-            try
-            {
-                await smtpServer.SendMailAsync(mail);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            throw new Exception(ex.Message);
         }
     }
 }

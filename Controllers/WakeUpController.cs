@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+public class WakeUpController : CustomBaseController
 {
-    public class WakeUpController : CustomBaseController
+    [AllowAnonymous]
+    [HttpGet]
+    public ActionResult<bool> Get()
     {
-        [AllowAnonymous]
-        [HttpGet]
-        public ActionResult<bool> Get()
-        {
-            return Ok(true);
-        }
+        return Ok(true);
     }
 }
