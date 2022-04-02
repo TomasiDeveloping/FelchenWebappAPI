@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-using Api.Helper;
+﻿using Api.Helper;
 
-namespace Api.Interfaces
+namespace Api.Interfaces;
+
+public interface IServiceRepository
 {
-    public interface IServiceRepository
-    {
-        public Task<bool> SendContactMailAsync(Contact contact);
-    }
+    public Task<bool> SendContactMailAsync(Contact contact);
 }
